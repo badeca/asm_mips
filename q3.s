@@ -12,6 +12,12 @@
 		
 		j char_counter
 
+### v0 char_counter(a0&, a1) ###
+## @param:
+# $4 as ADDRESS of input string (the address will be modified) 
+# $5 as searched character (safe)
+## @reg: $8 as auxiliary register
+## @return: $2 as number of $5 chars in $4 string
 	char_counter:
 		
 		.control:
@@ -30,6 +36,7 @@
 		
 		.ret:					# end of label
 			j done
+### done ###
 
 	done:
 		break
