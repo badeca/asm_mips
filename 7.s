@@ -1,6 +1,6 @@
 .data
 a:	.word 0
-n: 	.word 0
+n: 	.word 3
 s: 	.word 5
 sd:	 .word 0
 	.text
@@ -33,6 +33,7 @@ ltz:
 
 	addi $3, $0, 5				# $3 = 5
 	j factorial
+
 	
 equal:
 
@@ -44,8 +45,33 @@ z_equal:
 	addi $3, $0, 7				# $3 = 7
 	j factorial
 	
-factorial:
-	j factorial
+factorial: 						# $ fatorial de n
+	add $4, $0, $8
+	jal fact
+	j done
+	
+fact:
+	
+	addi $29, $29, -8 			
+	sw $31, 4($29) 				# save the return address
+ 	sw $4, 0($29) 				# save the argument n
+ 	
+	slti $8,$4,1 				# (n < 1) ?
+	beq $8, $0, L1	 			# if n >= 1, goto L1
+	
+	addi $2,$0,1	 			# else return 1
+	addi $29, $29, 8 			# pop 2 items off stack
+	jr $31 						# return to caller
+	
+L1: 
+
+	addi $4,$4,–1	 			# n >= 1: argument gets (n – 1)
+ 	jal fact 					# call fact with (n –1)
+ 	lw $4, 0($29) 				# return from jal: restore argument n
+	lw $31, 4($29) 				# restore the return address
+	addi $29, $29, 8 			# adjust stack pointer to pop 2 items
+	mul $2, $4, $2 				# return n * fact (n – 1)
+	jr $31 						# return to the caller
 	
 done:
 		break
