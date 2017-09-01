@@ -8,10 +8,11 @@
 
 		la $4, input_str		# $4 as string input
 		addi $5, $0, 'a'		# $5 as searched character
-		lw $2, na				# $2 as result
+	
+		jal char_counter
+		sw $2, na
+		j done
 		
-		j char_counter
-
 ### v0 char_counter(a0&, a1) ###
 ## @param:
 # $4 as ADDRESS of input string (the address will be modified) 
@@ -19,6 +20,8 @@
 ## @reg: $8 as auxiliary register
 ## @return: $2 as number of $5 chars in $4 string
 	char_counter:
+		
+		addi $2, $0, 0
 		
 		.control:
 			lb $8, ($4)			# get the content of string
@@ -35,7 +38,7 @@
 			j .control			# go back to the control loop
 		
 		.ret:					# end of label
-			j done
+			jr  $31
 ### done ###
 
 	done:
