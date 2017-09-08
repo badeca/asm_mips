@@ -10,7 +10,6 @@ start:
  	add $10, $0, $0 			# $10 = 0
  	
 for:
-	add $6, $0, $0				# $6 = 0
 	slti $12, $6, 10 			# $6 < 10 ?     
 	beq $12, $0, endfor
 		
@@ -33,6 +32,6 @@ endfor:
 	addi $11, $0, 1				# $11 = 1
 	
 done:
+	break;
 
 .end start
-
