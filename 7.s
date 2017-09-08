@@ -12,18 +12,18 @@ start:
 	lw $9, s					# $9 = s
 	add $3, $0, $0				# start $3 = 0
 	
-	slt $10, $8, $9 			# is s greater than n?
-	bne $10, $0, s_greater		# if so, go to s_greater
+	beq $8, $0, z_equal			# is $8 equal zero? if it is, go to z_equal
+	beq $9, $0, z_equal			# is $9 equal zero? if it is, go to z_equal
+	
+	beq $8, $9, equal			# are $8 and $9 equal? if so, go to equal
 	
 	slt $10, $8, $0				# is $8 lesser than zero?
 	bne $10, $0, ltz			# if it is go to ltz // ltz = lesser than zero
 	slt $10, $9, $0				# is $9 lesser than zero?
 	bne $10, $0, ltz			# if it is, go to ltz // ltz = lesser than zero
 	
-	beq $8, $9, equal			# are $8 and $9 equal? if so, go to equal
-	
-	beq $8, $0, z_equal			# is $8 equal zero? if it is, go to z_equal
-	beq $9, $0, z_equal			# is $9 equal zero? if it is, go to z_equal
+	slt $10, $8, $9 			# is s greater than n?
+	bne $10, $0, s_greater		# if so, go to s_greater
 	
 	j combination				# else do the combination
 	
@@ -93,7 +93,7 @@ L1:
  	lw $4, 0($29) 				# $4 = n
 	lw $31, 4($29) 				# $31 receives the last return address
 	addi $29, $29, 8 			# pop 2 items
-	mul $2, $4, $2 				# $2 = n * fact (n – 1)
+	mul $2, $4, $2 				# $2 = n * fact (n â€“ 1)
 	jr $31  					# return
 	
 .end start
