@@ -19,30 +19,30 @@
 		
 	char_counter:
 		
-		addi $4, $0, 0          # $4 = 0
-		addi $7, $0, 1	        # $7 = 1    				
+		addi $4, $0, 0                  # $4 = 0
+		addi $7, $0, 1	                # $7 = 1    				
 		
 		
 		.control:
-			lb $8, ($3)			# pego o conteudo da string
+			lb $8, ($3)		# pego o conteudo da string
 			beq $8, $0, .ret 	# vejo se chegou no fim da string
 			beq $8, $5, .pula	# vejo se eh o char que nao procuro
 				
-			addi $4, $4, 1      # incremento 1 no $4 quando encontar um numero
+			addi $4, $4, 1          # incremento 1 no $4 quando encontar um numero
 			
-			addi $9, $0, 48     # salvo o valor 48 no $9
-			sub $10, $8, $9     # subtraio 48 do caractere
-			mul $7, $7, $10    # multiplico o $7 pelo numero atual
-			j	.index_incr		# incremento o indice da string
+			addi $9, $0, 48         # salvo o valor 48 no $9
+			sub $10, $8, $9         # subtraio 48 do caractere
+			mul $7, $7, $10         # multiplico o $7 pelo numero atual
+			j .index_incr		# incremento o indice da string
 
 		.pula:
 			j .index_incr		# se o caractere for ',' nao faz nada, so incrementa o indice
 
 		.index_incr:
 			addi $3, $3, 1		# avanco um byte, o tamanho de um char
-			j .control			# volto pro loop de controle
+			j .control		# volto pro loop de controle
 		
-		.ret:					# end of label
+		.ret:				# end of label
 			jr  $31
 
 			
