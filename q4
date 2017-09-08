@@ -1,0 +1,54 @@
+.data
+	input_str: .asciiz "2,4"
+	count: .word 0
+	multiplicacao: .word 0
+
+.text
+.globl start
+.ent start
+	start:
+	
+		la $3, input_str		# $3 string de entrada
+		addi $5, $0, ','		# $5 caractere que nao vai ser multiplicado
+		
+		jal char_counter
+		sw $4, count    
+		sw $7, multiplicacao
+		j done
+		
+		
+	char_counter:
+		
+		addi $4, $0, 0          # $4 = 0
+		addi $7, $0, 1	        # $7 = 1    				
+		
+		
+		.control:
+			lb $8, ($3)			# pego o conteudo da string
+			beq $8, $0, .ret 	# vejo se chegou no fim da string
+			beq $8, $5, .pula	# vejo se eh o char que nao procuro
+				
+			addi $4, $4, 1      # incremento 1 no $4 quando encontar um numero
+			
+			addi $9, $0, 48     # salvo o valor 48 no $9
+			sub $10, $8, $9     # subtraio 48 do caractere
+			mul $7, $7, $10    # multiplico o $7 pelo numero atual
+			j	.index_incr		# incremento o indice da string
+
+		.pula:
+			j .index_incr		# se o caractere for ',' nao faz nada, so incrementa o indice
+
+		.index_incr:
+			addi $3, $3, 1		# avanco um byte, o tamanho de um char
+			j .control			# volto pro loop de controle
+		
+		.ret:					# end of label
+			jr  $31
+
+			
+### done ###
+
+	done:
+		break
+		
+.end start
