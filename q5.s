@@ -1,6 +1,6 @@
 .data
 	input_str: .asciiz "885688568697"
-	
+	output_str: .asciiz "000000"
 .text
 .globl start
 .ent start
@@ -9,8 +9,7 @@
 
 		la $4, input_str		# $4 as string input
 		
-		addi $1, $0, 48
-		
+		la $9, output_str       # $9 as string output
 		
 		jal function
 		
@@ -28,15 +27,11 @@
 			
 			addi $3, $8, 0		# reg 3 = unit
 			
-			sub $3, $3, $1		# asc2 -> number
-			
 			addi $4, $4, 1		# advance one byte
 			
 			lb $8, ($4)			# get the content of string
 			
 			addi $2, $8, 0		# reg 2 = dozens
-			
-			sub $2, $2, $1		# asc2 -> number
 			
 			addi $4, $4, 1		# advance one byte
 			
@@ -44,13 +39,9 @@
 			
 			add $5, $2, $3		# $5 = $2 + $3
 			
-			j	.decoder		# decoder
+			sb $5, output_str	# store memory
 			
-		.decoder:
-			
-			#FALTA TIRAR A DUVIDA SOBRE ESSA PARTE
-			
-			j .control
+			addi $9, $0, 1		# advance one byte
 			
 		.ret:					# end of label
 			jr  $31
