@@ -8,7 +8,10 @@
 	start:
 
 		la $4, input_str		# $4 as string input
-	
+		
+		addi $1, $0, 48
+		
+		
 		jal function
 		
 		j done
@@ -25,11 +28,15 @@
 			
 			addi $3, $8, 0		# reg 3 = unit
 			
+			sub $3, $3, $1		# asc2 -> number
+			
 			addi $4, $4, 1		# advance one byte
 			
 			lb $8, ($4)			# get the content of string
 			
 			addi $2, $8, 0		# reg 2 = dozens
+			
+			sub $2, $2, $1		# asc2 -> number
 			
 			addi $4, $4, 1		# advance one byte
 			
