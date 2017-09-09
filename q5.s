@@ -22,14 +22,9 @@
 					
 			beq $8, $0, .ret 	# check if it is the end of string
 			
-			addi $2, $0, 0      # init reg 2 (dozens)
-			addi $3, $0, 0		# init reg 3 (units)
-			
 			addi $3, $8, 0		# reg 3 = unit
 			
 			addi $4, $4, 1		# advance one byte
-			
-			lb $8, ($4)			# get the content of string
 			
 			addi $2, $8, 0		# reg 2 = dozens
 			
@@ -39,14 +34,12 @@
 			
 			add $5, $2, $3		# $5 = $2 + $3
 			
-			sb $5, output_str	# store memory
+			sb $5, output_str   # store memory
 			
-			addi $9, $0, 1		# advance one byte
+			addi $9, $9, 1		# advance one byte
 			
 		.ret:					# end of label
 			jr  $31
-			
-### done ###
 
 	done:
 		break
